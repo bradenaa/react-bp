@@ -1,0 +1,10 @@
+/src/client/dist
+
+/node_modules
+
+*~
+*.swp
+
+yarn-error.log
+
+coverage

@@ -1,0 +1,93 @@
+{
+  "name": "forms",
+  "version": "1.0.0",
+  "description": "Library to handle making forms in React",
+  "main": "index.js",
+  "jest": {
+    "verbose": true,
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/client/__tests__/setup/setupEnzyme.js"
+    ],
+    "testPathIgnorePatterns": [
+      "<rootDir>/src/client/__tests__/setup/"
+    ],
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
+  },
+  "scripts": {
+    "server": "nodemon src/server/index.js --ignore tests",
+    "server:prod": "NODE_ENV=production nodemon src/server/index.js --ignore tests",
+    "client": "webpack-dev-server --hot --inline --progress --colors --watch --content-base --config ./build-utils/webpack.config.js --env.env=dev",
+    "dev:hot": "NODE_ENV=development concurrently \"npm run server\" \"npm run client\"",
+    "build": "webpack --config ./build-utils/webpack.config.js --env.env=prod",
+    "build:server": "npm run build && npm run server:prod",
+    "build:analyze": "npm run build -- --env.addon=bundleanalyze --env.addon=bundlevisualizer && npm run server:prod",
+    "test:front": "jest ./src/client/__tests__",
+    "test:front:watch": "jest --watch ./src/client/__tests__",
+    "test:front:coverage": "jest --coverage ./src/client/__tests__",
+    "test:debug": "node --inspect node_modules/.bin/jest --runInBand ./src/client/__tests__"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.0",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.19.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-env": "^7.4.2",
+    "@babel/preset-react": "^7.0.0",
+    "axios-mock-adapter": "^1.17.0",
+    "babel-loader": "^8.0.5",
+    "babel-plugin-dynamic-import-node": "^2.3.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-preset-airbnb": "^3.2.1",
+    "clean-webpack-plugin": "^3.0.0",
+    "compression-webpack-plugin": "^2.0.0",
+    "css-loader": "^2.1.1",
+    "cssnano": "^4.1.10",
+    "dotenv-webpack": "^1.7.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "enzyme-to-json": "^3.3.5",
+    "eslint": "^5.3.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "file-loader": "^3.0.1",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "image-webpack-loader": "4.6.0",
+    "jest": "^24.8.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "node-sass": "^4.11.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "postcss-import": "^12.0.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.6.0",
+    "prop-types": "^15.7.2",
+    "redux-logger": "^3.0.6",
+    "redux-mock-store": "^1.5.3",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "styled-components": "^4.3.2",
+    "terser-webpack-plugin": "^1.2.3",
+    "uglifyjs-webpack-plugin": "^2.1.2",
+    "url-loader": "^1.1.2",
+    "webpack": "^4.29.6",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-cli": "^3.3.0",
+    "webpack-dev-server": "^3.2.1",
+    "webpack-merge": "^4.2.1",
+    "webpack-visualizer-plugin": "^0.1.11"
+  }
+}
