@@ -8,7 +8,6 @@ app.use(logger('dev'))
 app.use(bodyParser.json());
 
 if (['production'].includes(process.env.NODE_ENV)) {
-  console.log('hello')
   const path = require('path');
   app.use(express.static(path.resolve(__dirname, '../../src/client/dist')));
 
