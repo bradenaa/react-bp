@@ -1,20 +1,15 @@
-const webpackMerge = require('webpack-merge');
-
+/* eslint-disable global-require,import/extensions,import/no-dynamic-require */
+const { merge } = require('webpack-merge');
 const commonConfig = require('./webpack.common.js');
+const developmentConfig = require('./webpack.dev.js');
+const productionConfig = require('./webpack.prod.js');
 
-const getAddons = addonsArgs => {
-  const addons = Array.isArray(addonsArgs)
-    ? addonsArgs
-    : [addonsArgs];
-
-  return addons
-    .filter(Boolean)
-    .map(name => require(`./addons/webpack.${name}.js`));
-};
-
-module.exports = ({ env, addon }) => {
-  console.log('what is the en? ======> ', env)
-  const envConfig = require(`./webpack.${env}.js`);
-
-  return webpackMerge(commonConfig, envConfig, ...getAddons(addon));
+module.exports = (env) => {
+  if (env.development) {
+    return merge(commonConfig, developmentConfig);
+  }
+  if (env.production) {
+    return merge(commonConfig, productionConfig);
+  }
+  throw new Error('No matching configuration was found!');
 };

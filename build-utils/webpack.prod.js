@@ -1,33 +1,27 @@
+/* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
-const TerserJSPlugin = require("terser-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const TerserJSPlugin = require('terser-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
 
 // Config directories
-const SRC_DIR = path.join(__dirname, '../src/client');
-const OUTPUT_DIR = SRC_DIR + '/dist'
-
-console.log('\n ====>', SRC_DIR);
-console.log('\n =====> ', OUTPUT_DIR);
+const SOURCE_DIR = path.join(__dirname, '../src');
 
 module.exports = {
   mode: 'production',
   devtool: 'source-map',
   optimization: {
-    minimizer: [
-      new TerserJSPlugin({}),
-      new OptimizeCssAssetsPlugin({}),
-    ],
+    minimizer: [new TerserJSPlugin({}), new OptimizeCssAssetsPlugin({})],
   },
   resolve: {
     extensions: ['.js', '.jsx'],
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: '[name].[hash].css',
-      chunkFilename: '[id].[hash].css',
+      filename: '[name].[contenthash].css',
+      chunkFilename: '[id].[contenthash].css',
     }),
     new CompressionPlugin({
       filename: '[path].gz[query]',
@@ -44,15 +38,12 @@ module.exports = {
     rules: [
       {
         test: /\.(jpe?g|png|gif|mp4)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 10 * 1024,
+        type: 'asset',
+        parser: {
+          dataUrlCondition: {
+            maxSize: 10 * 1024, // 10kb
+          },
         },
-      },
-      {
-        test: /\.(jpg|png|gif|svg)$/,
-        loader: 'image-webpack-loader',
-        enforce: 'pre',
       },
       {
         test: /.(css|scss)$/,
@@ -64,7 +55,7 @@ module.exports = {
             loader: 'postcss-loader',
             options: {
               config: {
-                path: `${SRC_DIR}/postcss.config.js`,
+                path: `${SOURCE_DIR}/postcss.config.js`,
               },
             },
           },
